@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription</title>
+    <!-- Librairie Javascript: jQuery (v3.4.1) -->
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <div class="nom">
+        <h1>Instruct'IF</h1>
+    </div>
+    <div class="form-container">
+        <h2>Créer votre compte</h2>
+        <h3>Entrez les informations suivantes</h3>
+        <h4>Tous les champs sont obligatoires</h4>
+        <p class="error-message" id="error-message">Veuillez remplir tous les champs obligatoires.</p>
+        <form id="signup-form">
+            <div class="form-columns">
+                <div class="form-column">
+                    <label for="champ-nom">Nom</label><br>
+                    <input type="text" id="champ-nom" size="30" required /><br><br>
+                    <label for="champ-datenaiss">Date de naissance</label><br>
+                    <input type="date" id="champ-datenaiss" size="30" required /><br><br>
+                    <label for="champ-code">Code d'établissement (UAI)</label><br>
+                    <input type="text" id="champ-code" size="30" required/><br><br>
+                </div>
+                <div class="form-column">
+                    <label for="champ-prenom">Prénom</label><br>
+                    <input type="text" id="champ-prenom" size="40" required /><br><br>
+                    <label for="champ-classe">Classe</label><br>
+                    <select name="Classe" id="champ-classe" required>
+                        <option value="6">6ème</option>
+                        <option value="5">5ème</option>
+                        <option value="4">4ème</option>
+                        <option value="3">3ème</option>
+                        <option value="2">2nde</option>
+                        <option value="1">1ère</option>
+                        <option value="0">Terminale</option>
+                    </select><br><br>
+                    <label for="champ-ville">Ville</label><br>
+                    <input type="text" id="champ-ville" size="40" required/><br><br>
+                </div>
+            </div>
+            <hr>
+            <div class="form-columns">
+                <div class="form-column">
+                    <label for="champ-login">Mail</label><br>
+                    <input type="email" id="champ-login" size="40" required/>
+                </div>
+                <div class="form-column">
+                    <label for="champ-password">Mot de passe</label><br>
+                    <input type="password" id="champ-password" size="40" required/><br><br>
+                
+                    <label for="champ-confpassword">Confirmation Mot de passe</label><br>
+                    <input type="password" id="champ-confpassword" size="40" required/><br>
+                </div>
+            </div>
+            <button type="button" id="bouton-inscription">S'inscrire</button>
+            <p class="error-message" id="general-error-message">Inscription échouée. Veuillez réessayez ultérieurement ou avec une adresse mail différente.</p>
+            <p class="error-message" id="password-error-message">Les mots de passe entrés ne correspondent pas.</p>
+        </form>
+        <p>Vous avez déjà un compte Instruct'IF ? <a href="login.html">Connectez-vous</a></p>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#bouton-inscription').on('click', function () {
+                var allFieldsFilled = true;
+                var passwordsMatch = true;
+
+                $('#signup-form').find('input[required], select[required]').each(function () {
+                    if ($(this).val() === '') {
+                        allFieldsFilled = false;
+                    }
+                });
+
+                var champPassword = $('#champ-password').val();
+                var champConfpassword = $('#champ-confpassword').val();
+
+                if (champPassword !== champConfpassword) {
+                    passwordsMatch = false;
+                }
+
+                if (!allFieldsFilled) {
+                    $('#error-message').show();
+                    $('#password-error-message').hide(); // Cache le message d'erreur de confirmation mot de passe
+                    $('#general-error-message').hide(); // Cache le message d'erreur général
+                    return; // Empêche la soumission du formulaire
+                } else if (!passwordsMatch) {
+                    $('#password-error-message').show();
+                    $('#error-message').hide(); // Cache le message d'erreur de champs obligatoires
+                    $('#general-error-message').hide(); // Cache le message d'erreur général
+                    return; // Empêche la soumission du formulaire
+                } else {
+                    $('#error-message').hide();
+                    $('#password-error-message').hide();
+                }
+
+                console.log("clic sur le bouton d'inscription ");
+
+                var champLogin = $('#champ-login').val();
+                var champNom = $('#champ-nom').val();
+                var champPrenom = $('#champ-prenom').val();
+                var champDatenaiss = $('#champ-datenaiss').val();
+                var champClasse = $('#champ-classe').val();
+                var champVille = $('#champ-ville').val();
+                var champCode = $('#champ-code').val();
+
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'inscrire',
+                        login: champLogin,
+                        password: champPassword,
+                        nom: champNom,
+                        prenom: champPrenom,
+                        datenaiss: champDatenaiss,
+                        classe: champClasse,
+                        ville: champVille,
+                        code: champCode,
+                        confpassword: champConfpassword
+                    },
+                    dataType: 'json'
+                })
+                .done(function (response) {
+                    console.log('Response', response);
+                    if (response.confirmation) {
+                        document.location.href = "login.html";
+                    } else {
+                        $('#general-error-message').show(); // Affiche le message d'erreur général
+                    }
+                })
+                .fail(function (error) {
+                    console.log('Error', error); // LOG dans Console Javascript
+                    alert("Erreur lors de l'appel AJAX");
+                });
+            });
+        });
+    </script>
+
+
+</body>
+</html>

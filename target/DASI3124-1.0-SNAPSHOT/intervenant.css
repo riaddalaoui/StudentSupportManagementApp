@@ -1,0 +1,374 @@
+#headerintervenant {
+    width: 100%;
+    background-color: #F9F9F9;
+    padding: 10px;
+    margin: 0;
+    font-size: 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+#headerintervenant h1 {
+    margin: 0;
+}
+
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-icon {
+    width: 80px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+#deconnexion {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #0000FF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+#deconnexion:hover {
+    background-color: #87CEEB;
+}
+
+#container {
+    display: flex;
+    width: 80%;
+    margin-top: 20px;
+}
+
+#historique-container {
+    width: 20%;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#historique {
+    width: 100%;
+    overflow-y: auto;
+    max-height: 400px;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.consultation-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 24px;
+    color: #fff;
+    background-color: #0000FF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.consultation-button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.consultation-button:hover:enabled {
+    background-color: #87CEEB;
+}
+
+.historique-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.selected-historique-item {
+    background-color: #d3d3d3; /* gris léger */
+    color: #000; /* Optionnel : changer la couleur du texte */
+}
+
+#séance {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#séance-container {
+    flex-grow: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#séance-container h2 {
+    text-align: center;
+    font-size: 20px;
+    font-weight: normal;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.formulaire-demande {
+    margin: 0;
+    font-size: 16px;
+    font-weight: normal;
+    margin-left: 0px;
+    margin-bottom: 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.formulaire-classe {
+    font-size: 16px;
+    font-weight: normal;
+    margin-bottom: 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.formulaire-description {
+    margin: 0;
+    font-size: 16px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.formulaire-légende {
+    font-size: 16px;
+    margin-top: 20px;
+    font-weight: normal;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.bouton-validation {
+    align-content: center;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.modal {
+    display: none; /* Caché par défaut */
+    position: fixed; /* Reste en place */
+    align-content: center;
+    justify-content: center;
+    z-index: 1; /* Reste au-dessus */
+    left: 0;
+    top: 0;
+    width: 100%; /* Pleine largeur */
+    height: 100%; /* Pleine hauteur */
+    overflow: auto; /* Activé le scroll si nécessaire */
+    background-color: rgb(0, 0, 0); /* Couleur de fond */
+    background-color: rgba(0, 0, 0, 0.4); /* Couleur de fond avec opacité */
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% du haut et centré */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Peut être ajusté selon les besoins */
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.blur-background {
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+}
+
+#smiley-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.smiley {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+}
+
+.selected-smiley {
+    width: 100px; /* Ajuster la taille si nécessaire */
+    height: 100px;
+}
+
+.séance-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.séance-info-left, .séance-info-right {
+    width: 45%;
+}
+
+.séance-info-divider {
+    width: 1px;
+    background-color: #000; /* Couleur noire pour le trait */
+    margin: 0 10px;
+}
+
+#auto-evaluation-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#auto-evaluation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.notification {
+    position: relative;
+    display: inline-block;
+}
+
+.notification-icon {
+    width: 40px;
+    height: auto;
+}
+
+.notification-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+}
+
+/* Styles for menu buttons */
+#menu button {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    padding: 10px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+#menu button.active {
+    background-color: gray;
+    color: white;
+}
+
+#menu button:disabled {
+    background-color: #d3d3d3; /* Gris clair pour les boutons désactivés */
+    color: #808080; /* Gris pour le texte des boutons désactivés */
+    cursor: not-allowed; /* Curseur non autorisé */
+    border: 1px solid #808080; /* Bordure grise */
+}
+
+#soutien-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.séance-container {
+    flex-grow: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.soutien-label {
+    font-weight: bold;
+}
+
+.soutien-description {
+    text-align: center;
+}
+
+.soutien-button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.soutien-button-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #0000FF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.soutien-button-container button:hover {
+    background-color: #87CEEB;
+}
+
+#demande-soutien {
+    flex-grow: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box; /* Inclure le padding et la bordure dans la taille totale */
+}
+
+#content-flex {
+    display: flex;
+    width: 100%;
+}
+
+#map {
+    flex: 2;
+    height: 500px;
+    margin-right: 20px;
+}
+
+#chart-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#repartitionChart {
+    width: 100%;
+}
+
+#chart-legend {
+    margin-left: 20px;
+    max-width: 200px;
+}

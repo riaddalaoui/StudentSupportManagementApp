@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Connexion</title>
+        <!-- Librairie Javascript: jQuery (v3.4.1) -->
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    </head>
+    <body>
+        <div class ="nom">
+            <h1>Instruct'IF</h1>
+        </div>
+
+        <div class="form-container">
+        <h2>S'identifier</h2>
+        <h4>Entrez les informations suivantes</h4>
+        <p class="error-message" id="error-message">Veuillez remplir tous les champs obligatoires.</p>
+        <form id="signup-form">
+            <label for="champLogin">Identifiant</label><br>
+            <input type="text" id="champ-login" size="10" required /><br><br>
+            <label for="champPassword">Mot de passe </label><br>
+            <input type="password" id="champ-password" size="40" required/><br><br> 
+            <button type="button" id="bouton-connexion">Connexion</button>
+            <p class="error-message" id="login-error-message">Identifiant ou mot de passe incorrect.</p>
+        </form>
+        <p>Première visite sur Instruct'IF ? <a href="register.html">Inscrivez-vous !</a></p>
+        
+
+
+        <script>
+            $(document).ready(function () {
+                $('#bouton-connexion').on('click', function () {
+                    var allFieldsFilled = true;
+                    $('#signup-form').find('input[required]').each(function () {
+                        if ($(this).val() === '') {
+                            allFieldsFilled = false;
+                        }
+                    });
+
+                    if (!allFieldsFilled) {
+                        $('#error-message').show();
+                        return; // Empêche la soumission du formulaire
+                    } else {
+                        $('#error-message').hide();
+                    }
+
+                    console.log("clic sur le bouton de connexion"); // LOG dans Console Javascript
+                    $('#notification').html("Connexion..."); // Message pour le paragraphe de notification
+
+                    // Récupération de la valeur des champs du formulaire
+                    var champLogin = $('#champ-login').val();
+                    var champPassword = $('#champ-password').val();
+
+                    // Appel AJAX
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'connecter',
+                            login: champLogin,
+                            password: champPassword
+                        },
+                        dataType: 'json'
+                    })
+                    .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                        console.log('Response', response); // LOG dans Console Javascript
+                        if (response.connexion) {
+                            $('#notification').html("Connexion de " + response.utilisateur.prenom + " " + response.utilisateur.nom + " (ID " + response.utilisateur.id + ") ");
+                            if (response.type == "Eleve") {
+                                document.location.href = "student.html";
+                            }
+                            if (response.type == "Intervenant") {
+                                document.location.href = "intervenant.html";
+                            }
+                        } else {
+                            $('#login-error-message').show(); // Affiche le message d'erreur
+                        }
+                    })
+                    .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                        console.log('Error', error); // LOG dans Console Javascript
+                        alert("Erreur lors de l'appel AJAX");
+                    });
+                });
+            });
+        </script>
+
+
+    </body>
+</html>

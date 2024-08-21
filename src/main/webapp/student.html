@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Eleve</title>
+    <link rel="stylesheet" type="text/css" href="student.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <div id="headerstudent">
+        <h1>Instruct'IF</h1>
+        <div class="profile-section">
+            <img src="Images/profile.png" alt="profile icon" class="profile-icon">
+            <button id="deconnexion" onclick="disconnect()">Se déconnecter</button>
+        </div>
+    </div>
+    <hr>
+    
+    <div id="container">
+        <div id="historique-container">
+            <div id="historique">
+                <button id="newConsultation" class="consultation-button" onclick="newConsultation()">+</button>
+                <p>Chargement de l'historique...</p>
+            </div>
+        </div>
+        
+        <div id="séance-container">
+            <div id="séance">
+                <!-- Formulaire de demande de soutien sera chargé ici -->
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h2>Veuillez noter votre expérience</h2>
+        <div id="smiley-container">
+          <img src="Images/smileyBad.PNG" alt="nul" class="smiley" data-rating="1">
+          <img src="Images/smileyMid.PNG" alt="moyen" class="smiley" data-rating="2">
+          <img src="Images/smileyGood.PNG" alt="bien" class="smiley" data-rating="3">
+        </div>
+      </div>
+    </div>
+
+    <script>
+        var historyData = {}; // Déclarer une variable globale pour stocker l'historique
+        var matieres = {};
+        var enSoutien = 0;
+
+        $(document).ready(function () {
+            // Fonction pour appeler le servlet et obtenir les statistiques
+            verifyStudentConnected();
+        });
+
+        function verifyStudentConnected() {
+            $.ajax({
+                url: './ActionServlet',
+                method: 'POST',
+                data: {
+                    todo: 'verifyStudentConnected'
+                },
+                dataType: 'json'
+            })
+            .done(function (response) {
+                console.log('History Response', response); // LOG dans Console Javascript
+                if (response.connected) {
+                    enSoutien = response.status; 
+                    getHistory();
+                } else {
+                    document.location.href="login.html"; //redirection
+                }
+            })
+            .fail(function (error) {
+                console.log('Error', error); // LOG dans Console Javascript
+                $('#historique').html("Erreur lors de l'appel AJAX");
+            });
+        }
+
+        function getHistory() {
+            $.ajax({
+                url: './ActionServlet',
+                method: 'POST',
+                data: {
+                    todo: 'getHistoryStudents'
+                },
+                dataType: 'json'
+            })
+            .done(function (response) {
+                console.log('History Response', response); // LOG dans Console Javascript
+                if (response) {
+                    historyData = response; // Stocker l'historique dans la variable globale
+                    displayHistory(response);
+                    newConsultation();
+                } else {
+                    $('#historique').html("Erreur lors de la récupération de l'historique");
+                }
+            })
+            .fail(function (error) {
+                console.log('Error', error); // LOG dans Console Javascript
+                $('#historique').html("Erreur lors de l'appel AJAX");
+            });
+        }
+
+        function displayHistory(history) {
+            console.log('Error', enSoutien); // LOG dans Console Javascript
+
+            if (enSoutien == 0){
+                var histHtml = '<button id="newConsultation" class="consultation-button" onclick="newConsultation()">+</button>';
+            } else {
+                var histHtml = '<button id="enConsultation" class="consultation-button" onclick="newConsultation()">+ (en cours)</button>';
+            }
+            for (var key in history) {
+                histHtml += '<div class="historique-item" onclick="selectHistoriqueItem(this); loadSession(\''+ key +'\')">' + history[key].date + '<br>' + history[key].matière + '</div>';
+            }
+            $('#historique').html(histHtml);
+        }
+
+        function selectHistoriqueItem(element) {
+            // Supprimer la classe 'selected-historique-item' de tous les éléments
+            $('.historique-item').removeClass('selected-historique-item');
+
+            // Ajouter la classe 'selected-historique-item' à l'élément cliqué
+            $(element).addClass('selected-historique-item');
+        }
+
+        function loadSession(key) {
+            var session = historyData[key];
+            var sessionHtml = '<div class="séance-info">' +
+                                  '<div class="séance-info-left">' +
+                                      '<label for="matiere">Matière</label>' +
+                                      '<input type="text" id="matiere" value="' + session.matière + '" readonly><br><br>' +
+                                      '<label for="description">Description</label>' +
+                                      '<textarea id="description" rows="4" cols="50" readonly>' + session.description + '</textarea><br><br>' +
+                                  '</div>' +
+                                  '<div class="séance-info-right">' +
+                                      '<label for="intervenant">Intervenant</label>' +
+                                      '<input type="text" id="intervenant" value="' + session.intervenantNom +' '+ session.intervenantPrenom + '" readonly><br><br>' +
+                                      '<label for="bilan">Bilan</label>' +
+                                      '<textarea id="bilan" rows="4" cols="50" readonly>' + session.Bilan + '</textarea><br><br>' +
+                                  '</div>' +
+                              '</div>' +
+                              '<div id="auto-evaluation-container">' +
+                                  '<label for="auto-evaluation">Auto-évaluation :</label><br>' +
+                                  '<div id="auto-evaluation">';
+
+            var smileyImg = '';
+            if (session.autoEval == 1) {
+                smileyImg = '<img src="Images/smileyBad.PNG" alt="nul" class="selected-smiley">';
+            } else if (session.autoEval == 2) {
+                smileyImg = '<img src="Images/smileyMid.PNG" alt="moyen" class="selected-smiley">';
+            } else if (session.autoEval == 3) {
+                smileyImg = '<img src="Images/smileyGood.PNG" alt="bien" class="selected-smiley">';
+            }
+
+            sessionHtml += smileyImg + '</div></div>';
+            $('#séance').html(sessionHtml);
+        }
+        
+        function newConsultation(){
+            if (enSoutien == 0) {
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        todo: 'getMatieres'
+                    },
+                    dataType: 'json'
+                })
+                .done(function (response) {
+                    if (response) {
+                        matieres = response; // Stocker les matieres dans la variable globale
+
+                        var matieresHtml = '<h2>Informations sur la séance :</h2><br><br>'+
+                                           '<label for="categorie" class="formulaire-classe">Classe :</label>' +
+                                           '<select id="categorie" name="categorie" class ="formulaire-demande" required>' +
+                                           '<option value="">Matière</option>';
+                        for (var key in matieres) {
+                            matieresHtml += '<option value="' + matieres[key] + '">' + matieres[key] + '</option>';
+                        }
+                        matieresHtml += '</select><br>' +
+                                        '<label for="description" class="formulaire-légende">Description de la demande :</label>' +
+                                        '<textarea id="description" name="description" rows="15" cols="80" class ="formulaire-description" placeholder="Veuillez expliquer à l’intervenant sur quel sujet porte votre demande" required>' +
+                                        '</textarea><br>' +
+                                        '<button id="creerSoutien" onclick="creerSoutien()" class="bouton-validation">Valider la demande</button>';
+
+                        $('#séance').html(matieresHtml);
+                    }
+                })
+                .fail(function (error) {
+                    console.log('Error', error); // LOG dans Console Javascript
+                    $('#séance').html("Erreur lors de l'appel AJAX");
+                });
+            } else if (enSoutien == 1) {
+                $('#séance').html("\
+                                    <button id='visio' onclick='rejoindreVisio()' class='bouton-rej'>Rejoindre la visio</button>");
+            } else if (enSoutien == 2) {
+                rejoindreVisio();
+            }
+        }
+
+        function creerSoutien() { // Fonction appelée lors du clic sur le bouton
+            console.log("clic sur le bouton de demande de soutien "); // LOG dans Console Javascript
+
+            // Récupérer les valeurs du formulaire
+            var categorie = $('#categorie').val();
+            var description = $('#description').val();
+
+            // Afficher les valeurs dans la console
+            console.log('Catégorie:', categorie);
+            console.log('Description:', description);
+
+            if (!categorie || !description) {
+                alert("Veuillez remplir tous les champs.");
+                return;
+            }
+
+            $.ajax({
+                url: './ActionServlet',
+                method: 'POST',
+                data: {
+                    todo: 'creerSoutien',
+                    categorie: categorie,
+                    description: description
+                },
+                dataType: 'json'
+            })
+
+            .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                console.log('Response', response); // LOG dans Console Javascript
+                if (response.confirmation) {
+                    $('#séance').html("<button id='visio' onclick='rejoindreVisio()'>Rejoindre la visio</button>");
+                    enSoutien = 1;
+                    displayHistory(historyData);
+                } else {
+                    alert("Erreur lors de l'envoi de la demande");
+                }
+            })
+            .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                console.log('Error', error); // LOG dans Console Javascript
+                alert("Erreur lors de l'appel AJAX");
+            });
+        }
+
+        function rejoindreVisio() {
+            $('#séance').html("<img src='Images/professeur-devant-tableau.jpg' alt='visio icon'><button onclick='terminerVisio()'>Raccrocher</button>");
+            enSoutien = 2;
+        }
+
+        function terminerVisio() {
+            $.ajax({
+                url: './ActionServlet',
+                method: 'POST',
+                data: {
+                    todo: 'terminerVisio',
+                },
+                dataType: 'json'
+            })
+
+            .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                console.log('Response', response); // LOG dans Console Javascript
+                if (response.confirmation) {
+                    notation();
+                } else {
+                    alert("Erreur lors de la terminaison de l'appel");
+                }
+            })
+            .fail(function (error) {
+                console.log('Error', error); // LOG dans Console Javascript
+                alert("Erreur lors de l'appel AJAX");
+            });
+        }
+
+        function notation() {
+            // Obtenir le modal
+            var modal = document.getElementById("modal");
+
+            // Afficher le modal
+            modal.style.display = "block";
+
+            // Supprimer la logique de fermeture en cliquant en dehors du modal
+            window.onclick = null;
+
+            // Ajouter des écouteurs d'événements sur les smileys
+            var smileys = document.querySelectorAll('.smiley');
+            smileys.forEach(function(smiley) {
+                smiley.addEventListener('click', function() {
+                    var rating = this.getAttribute('data-rating');
+                    console.log("Note soumise:", rating);
+
+                    $.ajax({
+                        url: './ActionServlet',
+                        method: 'POST',
+                        data: {
+                            todo: 'notation',
+                            note: rating,
+                        },
+                        dataType: 'json'
+                    })
+
+                    .done(function (response) { // Fonction appelée en cas d'appel AJAX réussi
+                        console.log('Response', response); // LOG dans Console Javascript
+                        if (response.confirmation) {
+                            Swal.fire({
+                                title: 'Merci pour votre notation !',
+                                text: 'Votre retour est important pour nous.',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(function() {
+                                modal.style.display = "none";
+                                enSoutien = 0;
+                                getHistory();
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Erreur',
+                                text: 'Erreur lors de la notation.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    })
+                    .fail(function (error) { // Fonction appelée en cas d'erreur lors de l'appel AJAX
+                        console.log('Error', error); // LOG dans Console Javascript
+                        Swal.fire({
+                            title: 'Erreur',
+                            text: 'Erreur lors de l\'appel AJAX.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+                });
+            });
+        }
+        function disconnect(){
+            $.ajax({
+                url: './ActionServlet',
+                method: 'POST',
+                data: {
+                    todo: 'disconnect'
+                },
+                dataType: 'json'
+            })
+            .always( function () { // Fonction toujours appelée
+                document.location.href="index.html"; //redirection
+            });
+        }
+
+    </script>
+</body>
+</html>

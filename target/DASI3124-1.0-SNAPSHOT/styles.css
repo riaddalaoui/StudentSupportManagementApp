@@ -1,0 +1,418 @@
+.header {
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 36px;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.header .subheader {
+    margin: 0;
+    font-size: 18px;
+    font-weight: normal;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.h1 {
+    margin: 0;
+    font-size: 36px;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.icons {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.icons img {
+    max-width: 100px;
+    height: auto;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+.column {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+}
+.left-column {
+    flex : 2;
+}
+
+.right-column {
+    flex : 1;
+}
+
+.right-column h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+
+.signup-button {
+    padding-left: 140px;
+    font-size: 16px;
+    font-weight: normal;
+    color: #0000FF;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.signup-button:hover {
+    color: #87CEEB;
+}
+
+.signin-button {
+    padding-left: 85px;
+    font-size: 14px;
+    font-weight: normal;
+    color: #0000FF;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.signin-button:hover {
+    color: #87CEEB;
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.form-container h3 {
+    text-align: center;
+    font-weight: normal;
+    margin-top: 2px;
+    margin-bottom: 2px;  
+}
+
+.form-container h4 {
+    text-align: center;
+    font-weight: normal;
+    font-style: italic;
+    font-size : 13px;
+    margin-top: 10px;
+    margin-bottom: 2px;  
+    
+}
+
+.form-columns {
+    display: flex;
+    gap: 20px;
+    margin: 10px;
+}
+
+.form-column {
+    flex: 1;
+    margin-bottom: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+input, select, button {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    margin-top: 20px;
+    background-color: #0000FF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #87CEEB;
+}
+
+p {
+    text-align: center;
+    margin-top: 5px;
+}
+
+p a {
+    color: #0000FF;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+.nom{
+    font-family: 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    text-align: left;
+}
+.nom h1{
+    font-family: 'Trebuchet MS', sans-serif;
+    margin: 10px;
+    text-align : left;
+    font-weight: bold;
+}
+
+hr {
+    border: 1px solid #000000;
+    margin : 0px;
+}
+.error-message {
+    color: red;
+    text-align: center;
+    display: none; /* Masqué par défaut */
+}
+
+body {
+    font-family: 'Trebuchet MS', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.bandeau {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 36px;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+/* Styles page student.html */
+#headerstudent {
+    width: 100%;
+    background-color: #F9F9F9;
+    padding: 10px;
+    margin: 0; /* Correction de "marging" à "margin" */
+    font-size: 15px;
+    font-weight: bold;
+    display: flex; /* Utiliser flexbox pour aligner le contenu */
+    justify-content: space-between; /* Espacer le texte et l'image */
+    align-items: center; /* Centrer verticalement le contenu */
+}
+
+.profile-icon {
+    width: 80px; /* Ajustez cette valeur selon vos besoins */
+    height: auto; /* Conserver le ratio d'aspect */
+    margin-right: 20px;
+}
+
+#container {
+    display: flex;
+    width: 80%;
+    margin-top: 20px;
+}
+
+#historique-container {
+    width: 20%;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#historique {
+    width: 100%;
+    overflow-y: auto;
+    max-height: 400px;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.consultation-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 24px;
+    color: #fff;
+    background-color: #0000FF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.consultation-button:disabled{
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.consultation-button:hover:enabled {
+    background-color: #87CEEB;
+}
+
+.historique-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#séance {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#séance-container {
+    flex-grow: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+}
+#séance-container h2 {
+    margin-left: -400px;
+    font-size: 20px;
+    font-weight: normal;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+
+.formulaire-demande{
+    margin: 0;
+    font-size: 16px;
+    font-weight: normal;
+    margin-left: 0px;
+    margin-bottom : 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+.formulaire-classe{
+    font-size: 16px;
+    font-weight: normal;
+    margin-left: -150px;
+    margin-bottom : 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.formulaire-description{
+    margin: 0;
+    font-size: 16px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-left: 0px;
+    margin-bottom : 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.formulaire-légende{
+    margin-left: -520px;
+    font-size: 16px;
+    margin-top: 20px;
+    font-weight: normal;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.bouton-validation{
+    align-content: center;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.modal {
+    display: none; /* Caché par défaut */
+    position: fixed; /* Reste en place */
+    align-content: center;
+    justify-content: center;
+    z-index: 1; /* Reste au-dessus */
+    left: 0;
+    top: 0;
+    width: 100%; /* Pleine largeur */
+    height: 100%; /* Pleine hauteur */
+    overflow: auto; /* Activé le scroll si nécessaire */
+    background-color: rgb(0,0,0); /* Couleur de fond */
+    background-color: rgba(0,0,0,0.4); /* Couleur de fond avec opacité */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% du haut et centré */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Peut être ajusté selon les besoins */
+}
+
+.blur-background {
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+}
+
+#smiley-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.smiley {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+}
+
+.selected-smiley {
+    width: 100px; /* Ajuster la taille si nécessaire */
+    height: 100px;
+}
+
+.selected-historique-item {
+    background-color: #d3d3d3; /* gris léger */
+    color: #000; /* Optionnel : changer la couleur du texte */
+}

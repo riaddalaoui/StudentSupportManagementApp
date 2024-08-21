@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Intervenant</title>
+    <link rel="stylesheet" type="text/css" href="intervenant.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <div id="headerintervenant">
+        <h1>Instruct'IF</h1>
+        <div class="profile-section">
+            <img src="Images/profile.png" alt="profile icon" class="profile-icon">
+            <button id="deconnexion" onclick="disconnect()">Se déconnecter</button>
+        </div>
+    </div>
+    <hr>
+    
+    <div id="menu">
+        <button id="boutonHistorique" onclick="getHistory()">Historique</button>
+        <button id="boutonStatistics" onclick="getStatistics()">Tableau de bord</button>
+        <div class="notification">
+            <button id="boutonVerif" onclick="getSoutien()">
+                <img src="Images/bell.png" alt="notification icon" class="notification-icon">
+                <span class="notification-badge" id="notificationBadge">1</span>
+            </button>
+        </div>
+    </div>
+    
+    <div id="container">
+        <div id="historique-container">
+            <div id="historique">
+                <p>Chargement de l'historique...</p>
+            </div>
+        </div>
+        
+        <div id="séance-container">
+            <div id="séance">
+                <!-- Détails de la séance seront chargés ici -->
+            </div>
+        </div>
+        
+        <div id="content" style="display: none;">
+            <div id="content-flex">
+                <div id="map" style="height: 500px;"></div>
+                <div id="chart-container">
+                    <div id="repartitionChart" style="width: 100%;"></div>
+                    <div id="chart-legend" style="margin-left: 20px; max-width: 200px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="soutien-container" style="display: none;">
+            <!-- Détails de la demande de soutien seront chargés ici -->
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2>Rédaction du bilan</h2>
+            <form id="bilanForm">
+                <label for="bilan">Bilan</label>
+                <textarea id="bilan" rows="4" cols="50" placeholder="Rapide bilan sur le soutien effectué" required></textarea>
+                <button type="submit">Enregistrer</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="intervenant.js"></script>
+</body>
+</html>

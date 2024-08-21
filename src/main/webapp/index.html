@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instruct'IF</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <h1>Instruct'IF</h1>
+        <p class="subheader">Page d'accueil</p>
+    </header>
+    <div class="container">
+        <div class="left-column">
+            <div id="statistics">
+                 Chargement des statistiques...
+            </div>
+        </div>
+        <div class="right-column">
+            <h2>Instruct'IF</h2>
+            <p>Besoin d'aide dans vos révisions ? Profitez d'un intervenant spécialisé dans la matière dans laquelle vous avez des difficultés ! </p>
+            <p>Vous pouvez demander un soutien à n'importe quel moment, un intervenant répondra à vos questions en visioconférence.</p>
+            <p>De plus, vous aurez la possibilité d'avoir un suivi personnalisé. Vous aurez accès à vos demandes antérieures et un historique de celles-ci pour voir votre évolution et reprendre certains points vus en soutien.</p>
+            <p><a href="register.html" class="signup-button">Inscrivez-vous !</a></p>
+            <p><a href="login.html" class="signin-button">J'ai déjà un compte (se connecter)</a></p>
+        </div>
+    </div>
+    <div class="icons">
+        <img src="Images/book.PNG" alt="book icon">
+        <img src="Images/books.PNG" alt="books icon">
+        <img src="Images/hat.PNG" alt="hat icon">
+        <img src="Images/people.PNG" alt="people icon">
+        <img src="Images/school.PNG" alt="school icon">
+    </div>
+    
+    
+    <script type="text/javascript">
+        // Appeler la fonction pour obtenir les statistiques au chargement de la page
+        function getStatistics() {
+            $.ajax({
+                url: './ActionServlet',
+                method: 'POST',
+                data: {
+                    todo: 'getStatisticsAccueil' // Supposons que c'est l'action pour obtenir les statistiques
+                },
+                dataType: 'json'
+            })
+            .done(function (response) {
+                console.log('Statistics Response', response); // LOG dans Console Javascript
+                if (response) {
+                    displayStatistics(response); // Afficher les statistiques sur la page
+                } else {
+                    $('#statistics').html("Erreur lors de la récupération des statistiques");
+                }
+            })
+            .fail(function (error) {
+                console.log('Error', error); // LOG dans Console Javascript
+                $('#statistics').html("Erreur lors de l'appel AJAX");
+            });
+        }
+
+        function displayStatistics(statistics) {
+            var statsHtml = '';
+            statsHtml += '<p><span style="font-weight: bold;">' + statistics['nbEleves'] + ' élèves</span> ont déjà demandé un soutien</p><br>';
+            statsHtml += '<p>Pour <span style="font-weight: bold;">' + statistics['nbCours'] + ' cours</span></p><br>';
+            statsHtml += '<p><span style="font-weight: bold;">' + statistics['nbIntervenants'] + ' intervenants</span> sont là pour vous aider</p><br>';
+            $('#statistics').html(statsHtml); // Afficher les statistiques dans l'élément avec l'ID "statistics"
+        }
+
+
+
+        $(document).ready(function () {
+            // Fonction pour appeler le servlet et obtenir les statistiques
+            getStatistics();
+        });
+    </script>
+</body>
+</html>
